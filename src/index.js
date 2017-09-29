@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 // this package will handle GraphQL server reqs and res, based on your schema
-const {graphqlExpress} = require('apollo-server-express');
+const {graphqlExpress, graphiqlExpress} = require('apollo-server-express');
 
 const schema = require('./schema/');
 
@@ -11,6 +11,12 @@ var app = express();
 
 // applying graphql, bodyParser, and graphqlexpress to the entire server
 app.use('/graphql', bodyParser.json(), graphqlExpress({schema}));
+
+// setting up the playground for testing 
+app.use('/graphiql', graphiqlExpress({
+    endpointURL: 'graphql',
+}));
+
 
 // giving the server a port to listen on 
 const PORT = 3001;
